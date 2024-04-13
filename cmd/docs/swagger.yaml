@@ -1,0 +1,117 @@
+basePath: /api/v1
+definitions:
+  model.Ad:
+    properties:
+      description:
+        type: string
+      name:
+        type: string
+      price:
+        type: number
+    type: object
+host: localhost:8888
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: This is a sample server celler server.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Swagger Example API
+  version: "1.0"
+paths:
+  /ad:
+    post:
+      consumes:
+      - application/json
+      description: Create a new advertisement
+      parameters:
+      - description: Data of the new advertisement
+        in: body
+        name: ad
+        required: true
+        schema:
+          $ref: '#/definitions/model.Ad'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: '{"id": "ffZ0Wo9KIh29G24iNE1t"}'
+          schema:
+            type: object
+        "400":
+          description: '{"error": "Bad request"}'
+          schema:
+            type: object
+        "500":
+          description: '{"error": "Internal server error"}'
+          schema:
+            type: object
+      summary: Create Ad
+      tags:
+      - Advertisements
+  /ad/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve an advertisement by ID
+      parameters:
+      - description: ID of the advertisement to retrieve
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: '{"id": "ffZ0Wo9KIh29G24iNE1t"}'
+          schema:
+            type: object
+        "500":
+          description: '{"error": "Internal server error"}'
+          schema:
+            type: object
+      summary: Get Ad
+      tags:
+      - Example
+  /ads:
+    get:
+      description: Retrieve a list of advertisements
+      parameters:
+      - description: Page number
+        in: query
+        name: page
+        type: integer
+      - description: Sorting field (price, createdAt)
+        in: query
+        name: sort
+        type: string
+      - description: Sorting order (asc, desc)
+        in: query
+        name: order
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              type: object
+            type: array
+        "400":
+          description: '{"error": "Bad request"}'
+          schema:
+            type: object
+        "500":
+          description: '{"error": "Internal server error"}'
+          schema:
+            type: object
+      summary: Get Ads
+      tags:
+      - Advertisements
+swagger: "2.0"
