@@ -1,5 +1,12 @@
 version: '3.8'
 services:
+  app:
+    build: .
+    ports:
+      - "8888:8888"
+    depends_on:
+      - postgres
+      
   postgres:
     image: postgres:alpine
     environment:

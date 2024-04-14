@@ -56,13 +56,13 @@ const docTemplate = `{
                         }
                     },
                     "400": {
-                        "description": "{\"error\": \"Bad request\"}",
+                        "description": "{\"error\": \"Bad\t\t\trequest\"}",
                         "schema": {
                             "type": "object"
                         }
                     },
                     "500": {
-                        "description": "{\"error\": \"Internal server error\"}",
+                        "description": "{\"error\": \"Internal\tserver\terror\"}",
                         "schema": {
                             "type": "object"
                         }
@@ -80,7 +80,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Example"
+                    "Advertisements"
                 ],
                 "summary": "Get Ad",
                 "parameters": [
@@ -100,7 +100,7 @@ const docTemplate = `{
                         }
                     },
                     "500": {
-                        "description": "{\"error\": \"Internal server error\"}",
+                        "description": "{\"error\": \"Internal\tserver\terror\"}",
                         "schema": {
                             "type": "object"
                         }
@@ -127,7 +127,7 @@ const docTemplate = `{
                     },
                     {
                         "type": "string",
-                        "description": "Sorting field (price, createdAt)",
+                        "description": "Sorting field (price, created_at, updated_at)",
                         "name": "sort",
                         "in": "query"
                     },
@@ -149,13 +149,13 @@ const docTemplate = `{
                         }
                     },
                     "400": {
-                        "description": "{\"error\": \"Bad request\"}",
+                        "description": "{\"error\": \"Bad\t\t\trequest\"}",
                         "schema": {
                             "type": "object"
                         }
                     },
                     "500": {
-                        "description": "{\"error\": \"Internal server error\"}",
+                        "description": "{\"error\": \"Internal\tserver\terror\"}",
                         "schema": {
                             "type": "object"
                         }

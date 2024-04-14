@@ -97,12 +97,15 @@ func (h *adHandler) CreateAd(c *gin.Context) {
 //	@Tags			Advertisements
 //	@Produce		json
 //	@Param			page	query		int		false	"Page number"
-//	@Param			sort	query		string	false	"Sorting field (price, createdAt, updatedAt)"
+//	@Param			sort	query		string	false	"Sorting field (price, created_at, updated_at)"
 //	@Param			order	query		string	false	"Sorting order (asc, desc)"
-//	@Success		200		{array}		object
-//	@Failure		400		{object}	object	"{"error": "Bad			request"}"
+//	@Success		200		{array}		object  
+//	@Failure		400		{object}	object	false "{"error": "Bad			request"}" 
 //	@Failure		500		{object}	object	"{"error": "Internal	server	error"}"
-//	@Router			/ads [get]
+//	@Failure		400		{object}	object	"{"error": "invalid page parameter"}"
+
+
+// @Router			/ads [get]
 func (h *adHandler) GetAds(c *gin.Context) {
 	page := 1
 	order := "desc"
@@ -129,7 +132,7 @@ func (h *adHandler) GetAds(c *gin.Context) {
 	}
 
 	if sortStr, ok := c.Request.URL.Query()["sort"]; ok {
-		if len(sortStr) > 0 && (sortStr[0] != "price" && sortStr[0] != "createdAt" && sortStr[0] != "updatedAt") {
+		if len(sortStr) > 0 && (sortStr[0] != "price" && sortStr[0] != "created_at" && sortStr[0] != "updated_at") {
 			c.JSON(http.StatusBadRequest, gin.H{"error": "invalid sort parameter"})
 			return
 		}

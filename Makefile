@@ -2,6 +2,11 @@
 
 COVER_FILE ?= coverage.out
 
+run-docker:
+	sudo docker-compose up
+rm-docker:
+	sudo docker-compose down -v
+
 get-install-dependences:
 	go get firebase.google.com/go/v4@latest
 	go install github.com/swaggo/swag/cmd/swag@latest

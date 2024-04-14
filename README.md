@@ -1,3 +1,18 @@
+Generate swag docs, on http://localhost:8888/swagger/index.html
+```
+make swag
+```
+
+### Fast way to run app:
+```
+docker-compose up
+make run
+```
+
+#### Postgres not approved. May own firebase key?
+
+
+
 Тестовое задание
 
 Реализовать REST API со следующим функционалом

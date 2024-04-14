@@ -6,6 +6,8 @@ import (
 	postgres "advertisement-rest-api-http-service/pkg/postgres"
 	"context"
 	"encoding/base64"
+	"fmt"
+	"log"
 
 	"github.com/google/uuid"
 )
@@ -20,8 +22,16 @@ func NewAdRepositoryPostgres(db postgres.PostgresDB) repository.AdRepository {
 
 func (r *adRepositoryPostgres) GetAds(ctx context.Context, page int, sort string, order string) ([]*model.Ad, error) {
 	var ads []*model.Ad
+	log.Println("page", page, "sort", sort, "order", order)
 
-	rows, err := r.db.Query(ctx, "SELECT * FROM ads ORDER BY $1 $2 OFFSET $3 LIMIT 10", sort, order, (page-1)*10)
+	query := ""
+	if order == "asc" {
+		query = fmt.Sprintf("SELECT * FROM ads ORDER BY %s ASC OFFSET $1 LIMIT 10", sort)
+	} else if order == "desc" {
+		query = fmt.Sprintf("SELECT * FROM ads ORDER BY %s DESC OFFSET $1 LIMIT 10", sort)
+	}
+
+	rows, err := r.db.Query(ctx, query, (page-1)*10)
 	if err != nil {
 		return nil, err
 	}
@@ -29,7 +39,7 @@ func (r *adRepositoryPostgres) GetAds(ctx context.Context, page int, sort string
 
 	for rows.Next() {
 		var ad model.Ad
-		err := rows.Scan(&ad.ID, &ad.Name, &ad.Description, &ad.CreatedAt)
+		err := rows.Scan(&ad.ID, &ad.Name, &ad.Description, &ad.Price, &ad.CreatedAt, &ad.UpdatedAt)
 		if err != nil {
 			return nil, err
 		}
