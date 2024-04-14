@@ -9,8 +9,8 @@ docker-compose up
 make run
 ```
 
-#### Postgres not approved. May own firebase key?
-
+#### Postgres not approved. May own firebase key?  
+__________________________________________________________
 
 
 Тестовое задание
