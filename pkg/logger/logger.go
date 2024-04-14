@@ -7,6 +7,8 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
+
+// not used
 func InitLog() {
 
 	log.SetLevel(getLoggerLevel(os.Getenv("LOG_LEVEL")))

@@ -5,6 +5,7 @@ import (
 	"advertisement-rest-api-http-service/internal/repository"
 	postgres "advertisement-rest-api-http-service/pkg/postgres"
 	"context"
+	"database/sql"
 	"encoding/base64"
 	"fmt"
 	"log"
@@ -53,32 +54,38 @@ func (r *adRepositoryPostgres) GetAds(ctx context.Context, page int, sort string
 	return ads, nil
 }
 
-func (r *adRepositoryPostgres) GetAdByID(ctx context.Context, id string, fields bool) (*model.Ad, error) {
+func (r *adRepositoryPostgres) GetAdByID(ctx context.Context, id_ad string, fields bool) (*model.Ad, error) {
 	var ad model.Ad
 
-	err := r.db.QueryRow(ctx, "SELECT * FROM ads WHERE id = $1", id).Scan(&ad.ID, &ad.Name, &ad.Description, &ad.CreatedAt)
-	if err != nil {
-		return nil, err
-	}
-
 	if !fields {
-		ad.Description = ""
+		err := r.db.QueryRow(ctx, "SELECT name, price FROM ads WHERE id_ad = $1", id_ad).Scan(&ad.Name, &ad.Price)
+		if err != nil {
+			return nil, err
+		}
+	} else {
+		var description sql.NullString
+		err := r.db.QueryRow(ctx, "SELECT name, description, price FROM ads WHERE id_ad = $1", id_ad).Scan(&ad.Name, &description, &ad.Price)
+		if err != nil {
+			return nil, err
+		}
+		ad.Description = description.String
 	}
 
 	return &ad, nil
 }
 
 func (r *adRepositoryPostgres) CreateAd(ctx context.Context, ad *model.Ad) (string, error) {
-	id := GenerateShortID()
+	id_ad := GenerateShortID()
 
-	_, err := r.db.Exec(ctx, "INSERT INTO ads (id, name, description, created_at) VALUES ($1, $2, $3, $4)", id, ad.Name, ad.Description, ad.CreatedAt)
+	_, err := r.db.Exec(ctx, "INSERT INTO ads (id_ad, name, price, description, created_at) VALUES ($1, $2, $3, $4, $5)", id_ad, ad.Name, ad.Price, ad.Description, ad.CreatedAt)
 	if err != nil {
 		return "", err
 	}
 
-	return id, nil
+	return id_ad, nil
 }
 
+// генерю по подобию тех ID что были в firebase
 func GenerateShortID() string {
 	// as in firebase
 	id := uuid.New()

@@ -2,10 +2,14 @@
 
 COVER_FILE ?= coverage.out
 
-run-docker:
-	sudo docker-compose up
+run-docker-build:
+	sudo docker-compose -f docker-compose.build.yml up -d --build
+
 rm-docker:
 	sudo docker-compose down -v
+	sudo docker-compose -f docker-compose.build.yml down --volumes
+
+
 
 get-install-dependences:
 	go get firebase.google.com/go/v4@latest

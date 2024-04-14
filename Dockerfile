@@ -1,4 +1,3 @@
-
 FROM golang:latest AS builder
 
 WORKDIR /app
@@ -15,8 +14,11 @@ FROM golang:latest
 
 WORKDIR /app
 
+COPY --from=builder /app/key-firebase.json .
+COPY --from=builder /app/.env .
 COPY --from=builder /app/main .
 
 EXPOSE 8888
+
 
 CMD ["./main"]

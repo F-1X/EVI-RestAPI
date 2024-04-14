@@ -8,6 +8,11 @@ make swag
 docker-compose up
 make run
 ```
+### Or run with stage build dockerfile:  
+```
+make run-docker-build
+```
+
 
 #### Postgres not approved. May own firebase key?  
 __________________________________________________________

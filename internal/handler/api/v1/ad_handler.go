@@ -61,9 +61,9 @@ func (h *adHandler) GetAd(c *gin.Context) {
 //	@Accept			json
 //	@Produce		json
 //	@Param			ad	body		model.Ad	true	"Data of the new advertisement"
-//	@Success		201	{object}	object		"{"id": "ffZ0Wo9KIh29G24iNE1t"}"
-//	@Failure		400	{object}	object		"{"error": "Bad			request"}"
-//	@Failure		500	{object}	object		"{"error": "Internal	server	error"}"
+//	@Success		201	{object}	string		true   "{"id": "ffZ0Wo9KIh29G24iNE1t"}"
+//	@Failure		400	{object}	string		"{"error": "Bad			request"}"
+//	@Failure		500	{object}	string		"{"error": "Internal	server	error"}"
 //	@Router			/ad [post]
 func (h *adHandler) CreateAd(c *gin.Context) {
 
@@ -99,13 +99,11 @@ func (h *adHandler) CreateAd(c *gin.Context) {
 //	@Param			page	query		int		false	"Page number"
 //	@Param			sort	query		string	false	"Sorting field (price, created_at, updated_at)"
 //	@Param			order	query		string	false	"Sorting order (asc, desc)"
-//	@Success		200		{array}		object  
-//	@Failure		400		{object}	object	false "{"error": "Bad			request"}" 
-//	@Failure		500		{object}	object	"{"error": "Internal	server	error"}"
-//	@Failure		400		{object}	object	"{"error": "invalid page parameter"}"
-
-
-// @Router			/ads [get]
+//	@Success		200		{array}		object	
+//	@Failure		400		{object}	object	false					"{"error": "Bad	request"}"	
+//	@Failure		500		{object}	object	"{"error": "Internal	server			error"}"
+//	@Failure		400		{object}	object	"{"error": "invalid		page			parameter"}"
+//	@Router			/ads [get]
 func (h *adHandler) GetAds(c *gin.Context) {
 	page := 1
 	order := "desc"
