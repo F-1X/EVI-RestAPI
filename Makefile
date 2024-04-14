@@ -33,7 +33,9 @@ swag:
 	swag init -g ./cmd/main.go -o cmd/docs
 
 cover:
-	go tool cover
+	go test -coverprofile=coverage.out ./...
+	go tool cover -html=coverage.out -o coverage.html
+
 
 tools: ## Install all needed tools, e.g.
 	@go install -v github.com/golangci/golangci-lint/cmd/golangci-lint@v1.55.2

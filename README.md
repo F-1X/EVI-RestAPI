@@ -1,3 +1,6 @@
+## Clone repo
+``` git clone
+
 Generate swag docs, on http://localhost:8888/swagger/index.html
 ```
 make swag
@@ -14,7 +17,8 @@ make run-docker-build
 ```
 
 
-#### Postgres not approved. May own firebase key?  
+#### Postgres or own firebase key?  
+two repositories implemented
 __________________________________________________________
 
 
