@@ -1,0 +1,31 @@
+version: '3.8'
+services:
+  postgres:
+    image: postgres:alpine
+    environment:
+      POSTGRES_HOST: ${POSTGRES_HOST}
+      POSTGRES_PORT: ${POSTGRES_PORT}
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    healthcheck:
+      test: pg_isready --username "postgres" --dbname "postgres"
+      interval: 1s
+      retries: 3
+      timeout: 5s
+    ports:
+      - "${POSTGRES_PORT}:5432"
+
+  migrate:
+    image: migrate/migrate:4
+    command: "-source 'file://migrations' -database '${POSTGRES_URL}' up"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./migrations:/migrations:ro
+
+  adminer:
+    image: adminer
+    ports:
+      - "8080:8080"

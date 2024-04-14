@@ -147,9 +147,5 @@ func (h *adHandler) GetAds(c *gin.Context) {
 
 // better to place in validate package and test it inplace
 func validatePage(page int) bool {
-	if page < 0 {
-		return false
-	}
-
-	return true
+	return page >= 0
 }

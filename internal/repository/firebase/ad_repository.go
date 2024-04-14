@@ -3,7 +3,7 @@ package firestoreRepository
 import (
 	"advertisement-rest-api-http-service/internal/model"
 	"advertisement-rest-api-http-service/internal/repository"
-	database "advertisement-rest-api-http-service/pkg/firebase"
+	firebase "advertisement-rest-api-http-service/pkg/firebase"
 	"context"
 	"log"
 
@@ -12,10 +12,10 @@ import (
 )
 
 type adRepository struct {
-	client database.DB
+	client firebase.DB
 }
 
-func NewAdRepository(client database.DB) repository.AdRepository {
+func NewAdRepository(client firebase.DB) repository.AdRepository {
 
 	return &adRepository{client: client}
 }

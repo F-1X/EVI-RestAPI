@@ -3,13 +3,10 @@ package model
 import "time"
 
 type Ad struct {
-	Name        string    `json:"name" firestore:"name"`
-	Description string    `json:"description,omitempty" firestore:"description"`
-	Price       float32   `json:"price" firestore:"price"`
-	CreatedAt   time.Time `json:"-" firestore:"created_at"`
-	UpdatedAt   time.Time `json:"-" firestore:"updated_at"`
-}
-
-type AdsResponse struct {
-	Ads []*Ad `json:"ads"`
+	ID          string    `json:"-" firestore:"-" db:"id"`
+	Name        string    `json:"name" firestore:"name" db:"name"`
+	Description string    `json:"description,omitempty" firestore:"description" db:"description"`
+	Price       float32   `json:"price" firestore:"price" db:"price"`
+	CreatedAt   time.Time `json:"-" firestore:"created_at" db:"created_at"`
+	UpdatedAt   time.Time `json:"-" firestore:"updated_at" db:"updated_at"`
 }

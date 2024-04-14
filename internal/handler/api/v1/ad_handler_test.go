@@ -52,7 +52,7 @@ func TestGetAds(t *testing.T) {
 		order string
 	}
 
-	testtases := []struct {
+	testCases := []struct {
 		name           string
 		description    string
 		query          query
@@ -144,7 +144,7 @@ func TestGetAds(t *testing.T) {
 		},
 	}
 
-	for _, tt := range testtases {
+	for _, tt := range testCases {
 		t.Run(tt.name, func(t *testing.T) {
 			mockService := new(service.AdServicer)
 
