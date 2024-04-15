@@ -7,7 +7,7 @@ make swag
 ```
 ### Fast way to run app:
 ```
-docker-compose up
+docker-compose up -d
 make run
 ```
 ### Or run with stage build dockerfile:  
