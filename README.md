@@ -1,15 +1,14 @@
-## Clone repo
-``` git clone
+#### Clone repo
+```git clone https://github.com/F-1X/EVI-RestAPI```
 
-Generate swag docs, on http://localhost:8888/swagger/index.html
+Generate swag 🗿 docs, on http://localhost:8888/swagger/index.html  
 ```
 make swag
 ```
-
 ### Fast way to run app:
 ```
-make run-docker
-make run-app
+docker-compose up -d
+make run
 ```
 ### Or run with stage build dockerfile:  
 ```
@@ -21,7 +20,7 @@ make run-docker-build
 two repositories implemented
 __________________________________________________________
 
-
+( ≖‿  ≖ )
 Тестовое задание
 
 Реализовать REST API со следующим функционалом
