@@ -72,6 +72,7 @@ func (h *adHandler) CreateAd(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+	// need to move time in other place
 	location, err := time.LoadLocation("Europe/Amsterdam")
 	if err != nil {
 		panic(err)
@@ -79,7 +80,7 @@ func (h *adHandler) CreateAd(c *gin.Context) {
 
 	ad.CreatedAt = time.Now().In(location)
 	ad.UpdatedAt = time.Now().In(location)
-
+	log.Println("ad.UpdatedAt",ad.UpdatedAt)
 	log.Println(ad)
 	id, err := h.service.CreateAd(c.Request.Context(), &ad)
 	if err != nil {
@@ -99,8 +100,8 @@ func (h *adHandler) CreateAd(c *gin.Context) {
 //	@Param			page	query		int		false	"Page number"
 //	@Param			sort	query		string	false	"Sorting field (price, created_at, updated_at)"
 //	@Param			order	query		string	false	"Sorting order (asc, desc)"
-//	@Success		200		{array}		object	
-//	@Failure		400		{object}	object	false					"{"error": "Bad	request"}"	
+//	@Success		200		{array}		object
+//	@Failure		400		{object}	object	false					"{"error": "Bad	request"}"
 //	@Failure		500		{object}	object	"{"error": "Internal	server			error"}"
 //	@Failure		400		{object}	object	"{"error": "invalid		page			parameter"}"
 //	@Router			/ads [get]

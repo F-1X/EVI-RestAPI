@@ -5,9 +5,11 @@ import (
 	"advertisement-rest-api-http-service/internal/model"
 	service "advertisement-rest-api-http-service/internal/service/mocks"
 	"encoding/json"
+	"log"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
+	"strings"
 	"testing"
 
 	"github.com/gin-gonic/gin"
@@ -175,6 +177,83 @@ func TestGetAds(t *testing.T) {
 			}
 			u.RawQuery = q.Encode()
 
+			request, err := http.NewRequest(http.MethodGet, u.String(), nil)
+			assert.NoError(t, err)
+
+			router.ServeHTTP(rr, request)
+			assert.Equal(t, tt.expectedCode, rr.Code, "status code: got (%d) want (%d), testtase: (%s), url: (%s)", rr.Code, tt.expectedCode, tt.name, BASE_URL)
+			assert.Equal(t, tt.expectedOutput, rr.Body.String(), "output got: (%s) want (%s), testtase: (%s), url: (%s)", rr.Body.String(), tt.expectedOutput, tt.name, BASE_URL)
+		})
+
+	}
+
+}
+
+func TestGetAd(t *testing.T) {
+
+	gin.SetMode(gin.TestMode)
+
+	mockResp1 := &model.Ad{
+		ID:          "test1",
+		Name:        "1",
+		Price:       100,
+	}
+
+
+	type query struct {
+		ID     string
+		fields bool
+	}
+
+	testCases := []struct {
+		name           string
+		query          query
+		input          *model.Ad
+		expectedOutput string
+		expectedCode   int
+	}{
+		{
+			"success simple",
+			query{
+				ID: "test1",
+				fields: true,
+			},
+			mockResp1,
+			`{"name":"1","price":100}`,
+			200,
+		},
+
+	}
+
+	for _, tt := range testCases {
+		t.Run(tt.name, func(t *testing.T) {
+			mockService := new(service.AdServicer)
+
+			mockService.On("GetAdByID", mock.Anything, mock.AnythingOfType("string"), mock.AnythingOfType("bool")).Return(tt.input, nil)
+
+			rr := httptest.NewRecorder()
+			router := gin.Default()
+			api := v1.NewAdHandler(
+				mockService,
+			)
+
+			BASE_URL := "/api/v1/ad/:id"
+			router.GET(BASE_URL, api.GetAd)
+
+			u, err := url.Parse(BASE_URL)
+			if err != nil {
+				t.Fatalf("failed to parse URL: %v", err)
+			}
+			
+			u.Path = strings.Replace(u.Path, ":id", tt.query.ID, 1)
+			q := u.Query()
+	
+			if tt.query.fields {
+				q.Set("fields", "true")
+			}
+
+			u.RawQuery = q.Encode()
+			log.Println("u.String()", u.String())
 			request, err := http.NewRequest(http.MethodGet, u.String(), nil)
 			assert.NoError(t, err)
 

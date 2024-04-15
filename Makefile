@@ -2,8 +2,15 @@
 
 COVER_FILE ?= coverage.out
 
+run-docker:
+	@sudo docker-compose down -v
+	@sed -i 's|POSTGRES_URL=postgresql://postgres:postgres@postgres/postgres|POSTGRES_URL=postgresql://postgres:postgres@localhost/postgres|g' .env
+	@sudo docker-compose -f docker-compose.yml up --build
+
 run-docker-build:
-	sudo docker-compose -f docker-compose.build.yml up -d --build
+	@sudo docker-compose -f docker-compose.build.yml down --volumes
+	@sed -i 's|POSTGRES_URL=postgresql://postgres:postgres@localhost/postgres|POSTGRES_URL=postgresql://postgres:postgres@postgres/postgres|g' .env
+	@sudo docker-compose -f docker-compose.build.yml up -d --build
 
 rm-docker:
 	sudo docker-compose down -v
@@ -25,7 +32,7 @@ install-migrate:
 	apt-get install -y migrate
 
 
-run:
+run-app:
 	go run cmd/main.go 
 
 swag:
