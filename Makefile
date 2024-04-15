@@ -2,6 +2,9 @@
 
 COVER_FILE ?= coverage.out
 
+run-app:
+	go run cmd/main.go 
+
 run-docker:
 	@sudo docker-compose down -v
 	@sed -i 's|POSTGRES_URL=postgresql://postgres:postgres@postgres/postgres|POSTGRES_URL=postgresql://postgres:postgres@localhost/postgres|g' .env
@@ -32,8 +35,6 @@ install-migrate:
 	apt-get install -y migrate
 
 
-run-app:
-	go run cmd/main.go 
 
 swag:
 	swag fmt

@@ -4,7 +4,6 @@ import (
 	"advertisement-rest-api-http-service/internal/handler"
 	"advertisement-rest-api-http-service/internal/model"
 	"advertisement-rest-api-http-service/internal/service"
-	"log"
 	"net/http"
 	"strconv"
 	"time"
@@ -80,8 +79,7 @@ func (h *adHandler) CreateAd(c *gin.Context) {
 
 	ad.CreatedAt = time.Now().In(location)
 	ad.UpdatedAt = time.Now().In(location)
-	log.Println("ad.UpdatedAt",ad.UpdatedAt)
-	log.Println(ad)
+
 	id, err := h.service.CreateAd(c.Request.Context(), &ad)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
